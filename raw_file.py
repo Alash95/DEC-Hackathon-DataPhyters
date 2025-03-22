@@ -34,6 +34,7 @@ def process_data(data):
                 'School_Name': school['name'],
                 'Address': school['address'],
                 'State': school['state'],
+                'City': school['city'],
                 'Highest_Degree': school['degrees_awarded']['highest'],
                 'Predominant_Degree': school['degrees_awarded']['predominant'],
                 'Predominant_Recoded': school['degrees_awarded']['predominant_recoded'],

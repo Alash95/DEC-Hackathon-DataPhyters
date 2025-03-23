@@ -24,6 +24,7 @@ def process_data(data):
         
         try:
             school = result['latest']['school']
+            student = result['latest']['student']
             admission = result['latest']['admissions']
             cost = result['latest']['cost']
             aid = result['latest']['aid']
@@ -31,6 +32,7 @@ def process_data(data):
             
             
             row = {
+               'Id':result.get('id'),
                 'School_Name': school['name'],
                 'Address': school['address'],
                 'State': school['state'],
@@ -38,7 +40,11 @@ def process_data(data):
                 'Highest_Degree': school['degrees_awarded']['highest'],
                 'Predominant_Degree': school['degrees_awarded']['predominant'],
                 'Predominant_Recoded': school['degrees_awarded']['predominant_recoded'],
+                'Accreditor_Code':school['accreditor_code'],
                 'Institution_Level': school['institutional_characteristics']['level'],
+                'Student_Size': student['size'],
+                'Demographics_men':student['demographics']['men'],
+                'Demographics_women':student['demographics']['women'],
                 'Admission_Rate_Overall': admission['admission_rate'].get('overall'),
                 'Admission_Rate_by_OPE_ID': admission['admission_rate'].get('by_ope_id'),
                 'Consumer_Admission_Rate': admission['admission_rate'].get('consumer_rate'),
@@ -64,7 +70,7 @@ def process_data(data):
                     for subject, score in scores.items():
                         row[f'SAT_{score_type}_{subject}'] = score
             
-            # Extract transfer rates
+            # Extract transfer rates -- retention rate
             for category, rates in completion.get('transfer_rate', {}).items():
                 for rate_type, rate in rates.items():
                     row[f'Transfer_Rate_{category}_{rate_type}'] = rate

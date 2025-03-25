@@ -6,7 +6,8 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def request_data(url, parameter):
-    logging.info(f"Requesting data from {url}")
+    base_url = "https://api.data.gov/ed/collegescorecard/v1/schools"
+    logging.info(f"Requesting data from {base_url}")
     response = requests.get(url, params=parameter)
     status = response.status_code
     logging.info(f"status code for the request {status}")
@@ -42,6 +43,7 @@ def process_data(data):
                 'Predominant_Recoded': school['degrees_awarded']['predominant_recoded'],
                 'Accreditor_Code':school['accreditor_code'],
                 'Institution_Level': school['institutional_characteristics']['level'],
+                'Religious_affiliation':school['religious_affiliation'],
                 'Student_Size': student['size'],
                 'Demographics_men':student['demographics']['men'],
                 'Demographics_women':student['demographics']['women'],
@@ -74,6 +76,13 @@ def process_data(data):
             for category, rates in completion.get('transfer_rate', {}).items():
                 for rate_type, rate in rates.items():
                     row[f'Transfer_Rate_{category}_{rate_type}'] = rate
+
+            #Extract type of school
+            if 'latest' in result and 'programs' in result['latest']:
+                cip_programs = result['latest']['programs'].get('cip_4_digit')
+                for item in cip_programs:
+                    program_type = item.get('school')
+                    row['type_of_school'] = program_type.get('type')
             
             processed_data.append(row)
         

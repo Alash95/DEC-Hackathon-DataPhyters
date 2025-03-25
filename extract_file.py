@@ -10,7 +10,7 @@ def main():
 
     URL = f"https://api.data.gov/ed/collegescorecard/v1/schools?api_key={API_KEY}&sort=latest.student.size:desc"
     raw_data = []
-    for i in range(65):
+    for i in range(10):
         # page (i + 1) to not make the page number starts from
         # 0 like it is used in the api
         logging.info(f"Requesting for page {i+1}")
@@ -24,7 +24,7 @@ def main():
     logging.info(f"Total data is {len(res)}")
     print()
     processed_data = process_data(raw_data)
-    processed_data.to_csv('extracted2_data.csv')
+    processed_data.to_csv('extracted4_data.csv')
     return processed_data
         #yield processed_data
 

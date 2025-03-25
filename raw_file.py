@@ -15,7 +15,7 @@ def request_data(url, params):
         data = response.json()
         return data["results"]
     logging.info("Request failed but requesting one more time")
-    return request_data(url, parameter)
+    return request_data(url, params)
 
 def process_data(data):
     logging.info(f"Processing data for school")
@@ -47,6 +47,7 @@ def process_data(data):
                 'Student_Size': student['size'],
                 'Demographics_men':student['demographics']['men'],
                 'Demographics_women':student['demographics']['women'],
+                'Retention_Rate':student['retention_rate']['overall']['full_time'],
                 'Admission_Rate_Overall': admission['admission_rate'].get('overall'),
                 'Admission_Rate_by_OPE_ID': admission['admission_rate'].get('by_ope_id'),
                 'Consumer_Admission_Rate': admission['admission_rate'].get('consumer_rate'),

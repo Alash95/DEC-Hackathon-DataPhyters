@@ -58,8 +58,7 @@ def fetch_all_data(url):
     # Log the total number of records fetched across all pages
     logging.info(f"Fetched {len(all_data)} schools across {total_pages} pages.")
     college_data = pd.DataFrame(all_data)
-    college_data.to_csv("college_data.csv", index=False)
-    logging.info(f"Data saved to CSV")
+    logging.info(f"Data saved to Dataframe")
     return college_data
 
 def rank_and_sort_schools(data):

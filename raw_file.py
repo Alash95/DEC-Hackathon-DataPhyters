@@ -5,15 +5,15 @@ import logging
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def request_data(url, parameter):
+def request_data(url, params):
     base_url = "https://api.data.gov/ed/collegescorecard/v1/schools"
     logging.info(f"Requesting data from {base_url}")
-    response = requests.get(url, params=parameter)
+    response = requests.get(url, params=params)
     status = response.status_code
     logging.info(f"status code for the request {status}")
     if response.ok:
         data = response.json()
-        return data
+        return data["results"]
     logging.info("Request failed but requesting one more time")
     return request_data(url, parameter)
 
@@ -21,7 +21,7 @@ def process_data(data):
     logging.info(f"Processing data for school")
     processed_data = []
     
-    for result in data['results']:
+    for result in data:
         
         try:
             school = result['latest']['school']

@@ -1,1 +1,8 @@
-__pycache__
+*/__pycache__
+.env
+sample_school_data.json
+*/etl.ipynb
+dec_code/
+dec_venv/
+logs/
+plugins/
